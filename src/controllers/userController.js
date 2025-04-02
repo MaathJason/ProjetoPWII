@@ -2,7 +2,6 @@ import express, { request, response } from "express";
 
 const routes = express.Router();
 
-
 routes.get("/", (request, response) => {    
     response.status(200).send("Deu tudo certo!🐭")
 });
@@ -24,8 +23,8 @@ routes.post("/", (request,response) =>{
         return response.status(400).send({"response":"O campo deve ser preenchido como 'admin' ou 'comum'"});
     }
 
-    return response.status(201).send({"response":"Usuario cadastrado com sucesso"}) //201 é um retorno de cadastro criado com sucesso
+    return response.status(201).send({"response":"Usuario cadastrado com sucesso"});
+    
 });
-
 
 export default routes;
