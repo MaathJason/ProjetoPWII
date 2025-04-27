@@ -12,6 +12,6 @@ AppDataSource.initialize().then(async () =>{
     console.log("Banco de dados conectado com sucesso!")
 });
 
-server.listen(3000, () => {
+server.listen(3333, () => {
     console.log("Servidor está ok 🐭 ");
 });

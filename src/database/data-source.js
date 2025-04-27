@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import user from "../entities/user.js";
+
 
 const AppDataSource = new DataSource({
     type: "mysql",
@@ -9,7 +9,7 @@ const AppDataSource = new DataSource({
     port: 3306,
     password: "",
     database: "livrarialogusdev",
-    entities: [user], 
+    entities: ["src/entities/*.js"], 
     migrations: ["src/database/migrations/*.cjs"],
 });
 

@@ -1,12 +1,25 @@
 import express, { request, response } from "express";
+import user from "../entities/user.js";
+import { AppDataSource } from "../database/data-source.js";
+import { Like } from "typeorm";
 
 const routes = express.Router();
+const userRepository = AppDataSource.getRepository(user);
 
-routes.get("/", (request, response) => {    
-    response.status(200).send("Deu tudo certo!🐭")
+
+routes.get("/", async (request, response) => {    
+    const users = await userRepository.find();
+    return response.status(200).send({"response":users})
 });
 
-routes.post("/", (request,response) =>{
+
+routes.get("/:nameFound", async (request, response) => {  
+    const {nameFound} = request.params;  
+    const userFound = await userRepository.findBy({name:Like(`%${nameFound}%`)})
+    return response.status(200).send({"response":userFound})
+});
+
+routes.post("/", async (request,response) =>{
 
     const {name, email, password,typeUser} = request.body;
 
@@ -22,6 +35,15 @@ routes.post("/", (request,response) =>{
     if(typeUser !== "admin" && typeUser !== "comum"){
         return response.status(400).send({"response":"O campo deve ser preenchido como 'admin' ou 'comum'"});
     }
+
+    try {
+        const newUser = userRepository.create({name, email, password, typeUser});
+        await userRepository.save(newUser);
+    }
+    catch(error) {
+        return response.status(500).send({"erro": error})
+    }
+        
 
     return response.status(201).send({"response":"Usuario cadastrado com sucesso"});
     
