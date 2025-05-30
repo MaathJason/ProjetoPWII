@@ -66,5 +66,3 @@ routes.delete("/:id", async (request,response)=>{
 });
 
 export default routes;
-
-//editora,autor,categoria
